@@ -1,0 +1,143 @@
+/* Faça um programa em C que:
+a) Preencha uma matriz, NxN com números inteiros. Crie uma função preencheMatriz(M).
+b) Escreva a matriz formatada na tela. Crie uma função escreveMatriz(M).
+c) Crie duas listas encadeadas, L1 e L2 que contenham os elementos da matriz,
+obedecendo a seguinte regra:
+i. L1 conterá todos os elementos pares
+ii. L2 conterá todos os elementos múltiplos de 3
+Deve ser criada função insereElem(L, elem) que obrigatoriamente deve inserir cada
+elemento passado como parâmetro no final da lista L. A função retorna a lista L.
+d) Escreva L1 e L2 na tela. Para isso crie uma função recursiva, imprimeLista(L).
+e) Faça uma função, criaListaUniao, que receba L1 e L2 como parâmetros e que crie e retorne uma lista L3 que conterá todos os elementos de L1 e L2 sem repetição.
+f) Escreva L3 na tela.
+g) Faça uma função que escreva todos os elementos de L3, maiores do que a soma da diagonal secundária da matriz M.
+
+IMPORTANTE: L1, L2 e L3 devem ser simplesmente encadeadas, sem nós cabeça e não circulares. */
+
+#include <stdio.h>
+#include <stdlib.h>
+#define N 3
+
+struct NO{
+	int num;
+	struct NO *prox;
+};
+typedef struct NO lista;
+
+
+void preencheMatriz(int matriz[N][N]){
+	for(int i = 0; i < N; i++){
+		for(int j = 0; j < N; j++){
+			printf("Digite o elemento [%d][%d]: ", i + 1, j + 1);
+			scanf("%d", &matriz[i][j]);
+		}
+	}
+}
+
+
+void escreveMatriz(int matriz[N][N]){
+	for(int i = 0; i < N; i++){
+		printf("\n");
+		for(int j = 0; j < N; j++){
+			printf(" [%d] ", matriz[i][j]);
+		}
+	}
+}
+
+
+lista *insereElem(lista *L, int elem) {
+  lista *el;
+    el = (lista *)malloc(sizeof(lista));
+    el->num = elem;
+    el->prox=NULL;
+    if (L == NULL) {
+      L = el;
+    } 
+		else {
+      el->prox = L->prox;
+      L->prox = el;
+    }
+  return L;
+}
+
+
+void imprimeLista (lista *L){
+	if (L != NULL){
+		printf("%d -> ", L->num);        
+		imprimeLista(L->prox);          
+	}
+}
+
+
+int contem(lista *L, int elemento){
+  lista *aux = L;
+  while(aux!=NULL){
+    if(aux->num==elemento){
+      return 1;
+    }
+    aux = aux->prox;
+  }
+  return 0;
+}
+
+
+lista *criaListaUniao(lista *L1, lista *L2){
+  lista *L3, *aux1=L1, *aux2 = L2;
+  L3 = (lista*)malloc(sizeof(lista));
+  L3->prox = NULL;
+  while(aux1!=NULL){
+    if (!contem(L3, aux1->num)){
+      L3 = insereElem(L3, aux1->num);
+    }
+    aux1=aux1->prox;
+  }
+  while(aux2!=NULL){
+    if (!contem(L3, aux2->num)){
+      L3 = insereElem(L3, aux2->num);
+    }
+    aux2=aux2->prox;
+  }
+  return L3;
+}
+
+
+void elementosMaiores(int total, lista *L3){
+	lista *p;
+	for(p = L3; p; p = p->prox){
+		if(p->num > total){
+			printf("%d é maior que a soma da diagonal secundária\n", p->num);
+		}
+	}
+}
+
+
+int main(void){
+  lista *L1, *L2, *L3;
+	L1 = NULL;
+	L2 = NULL;
+	L3 = NULL;
+	int matriz[N][N], somaDiagonal = 0;
+	preencheMatriz(matriz);
+	escreveMatriz(matriz);
+	for(int i = 0; i < N; i++){
+		for(int j = 0; j < N; j++){
+			if(matriz[i][j] % 2 == 0){
+				L1 = insereElem(L1, matriz[i][j]);
+			}
+			if(matriz[i][j] % 3 == 0){
+				L2 = insereElem(L2, matriz[i][j]);
+			}
+		}
+	}
+	printf("\nL1 => ");
+	imprimeLista(L1);
+	printf("\nL2 => ");
+	imprimeLista(L2);
+	L3 = criaListaUniao(L1, L2);
+	printf("\nL3 => ");
+	imprimeLista(L3);
+	for(int i = 0; i < N; i++){
+		somaDiagonal += matriz[i][N -1 - i];
+	}
+	elementosMaiores(somaDiagonal, L3);
+}

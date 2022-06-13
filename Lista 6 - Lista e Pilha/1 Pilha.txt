@@ -1,0 +1,51 @@
+/*Faça uma função que receba uma pilha P como parâmetro e que escreva todos os seus elementos.
+Considere uma pilha de números inteiros. Considere alocação encadeada dinâmica.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct NO {
+  int info;
+  struct NO *prox;
+};
+typedef struct NO pilha;
+
+
+pilha *push(pilha *P, int elem){
+  pilha *el;
+  el = (pilha*) malloc(sizeof(pilha));
+  el->info = elem;
+  el->prox = P;
+  P = el;
+  return P;
+}
+
+pilha *pop(pilha *P){
+  pilha *lixo;
+  if (P != NULL) {
+    lixo = P;
+    P = P->prox;
+    free(lixo);
+  }
+  return P;
+}
+
+
+int main(){
+  pilha *P;
+  int num;
+  P = NULL;
+  printf("Digite um num: ");
+  scanf("%d", &num);
+  while (num >= 0) {
+    P = push(P,num);
+    printf("Digite um num: ");
+    scanf("%d", &num);
+  }
+  printf("\nPilha -> ");
+  while (P != NULL) {
+    printf("%d -> ", P->info);
+    P = pop(P);
+  } 
+  return 0;
+}

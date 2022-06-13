@@ -1,0 +1,39 @@
+/*Faça um programa que preencha um vetor de N posições com os N primeiros termos de uma série de Fibonacci (0 1 1 2 3 5 8 13 21 34...). Após preenchido o vetor, verifique se um determinado número informado pelo usuário pertence ou não ao vetor.*/
+
+#include <stdio.h>
+void fib(int n, int fibo[n]){
+	fibo[0] = 0, fibo[1] = 1;
+	for(int i = 2; i < n; i++){
+		fibo[i] = fibo[i-1] + fibo[i -2];
+	}
+
+}
+
+int percorre(int n, int fibo[n]){
+	int num;
+	printf("Digite o numero que deseja saber se esta na sequencia: ");
+	scanf("%d", &num);
+	for(int bct = 0; bct < n; bct++){
+		if(fibo[bct] == num){
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int main(void) {
+	int n;
+	printf("Digite o numero de termos: ");
+	scanf("%d", &n);
+	int fibo[n];
+	fib(n, fibo);
+	//for(int j = 0; j < n; j++){
+		//printf("%d\n", fibo[j]);
+	//}
+	if(percorre(n, fibo)){
+		printf("O numero esta contido");
+	}
+	else{
+		printf("O numero nao esta contido");
+	}	
+}	

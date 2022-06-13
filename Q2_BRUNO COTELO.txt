@@ -1,0 +1,90 @@
+/*(valor 5,0) Fazer um programa em C que preencha uma matriz quadrada NxN com
+números inteiros. Após o preenchimento da matriz faça:
+• Faça uma função que retorne o produto dos elementos da diagonal secundária
+• Faça uma função que retorne a soma dos elementos acima da diagonal principal.
+• Faça uma função que retorne a quantidade de números primos existentes na matriz.
+• Faça uma função recursiva que receba o maior elemento N da matriz como parâmetro
+e que escreva uma série com os números pares positivos menores do que N.*/
+
+#include <stdio.h>
+
+int diagonalSecundaria(int n, int matriz[n][n]){
+	int produto = 1;
+	for(int i = 0; i < n; i++){
+		for(int j =0; j < n; j++){
+			if (j == n - i - 1) {
+			produto *= matriz[i][j];
+			}
+		}
+	}
+	return produto;
+}
+
+
+
+int somaDPrincipal(int n, int matriz[n][n]){
+	int soma = 0;
+	for(int i = 0; i < n; i++){
+		for(int j =0; j < n; j++){
+			if (j > i){
+				soma += matriz[i][j];
+			}
+		}
+	}
+	return soma;
+}
+
+
+
+int retornaPrimo(int n, int matriz[n][n]){
+  int divisores = 0;
+  int qtd = 0;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      divisores = 0;
+      if(matriz[i][j] > 1){
+      	for (int c = 2; c <= matriz[i][j] / 2 && divisores == 0; c++) {
+          if (matriz[i][j] % c == 0) {
+            divisores++;
+            }
+        }
+          if (divisores == 0) {
+            qtd++;
+        	}
+      	}
+    	}
+  	}
+	return(qtd);
+}
+
+
+int paresPositivos(int maior, int par){
+  if(par >= 1){
+    return 0;
+  }
+	else{
+	printf("%d\n", par);
+	return paresPositivos(maior, par + 2);
+	}
+}
+
+
+
+int main(void) {
+	int n, maior = 0;
+	printf("Digite o tamanho N: ");
+	scanf("%d", &n);
+	int matriz[n][n];
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			scanf("%d", &matriz[i][j]);
+			if(matriz[i][j] > maior){
+				maior = matriz[i][j];
+			}
+		}
+	}
+	printf("O produto da diagonal secundaria é: %d\n", diagonalSecundaria(n, matriz));
+	printf("A soma dos elementos acima da DP é: %d\n", somaDPrincipal(n, matriz));
+	printf("O numero de primos é: %d\n", retornaPrimo(n, matriz));
+	paresPositivos(maior, 0);
+}

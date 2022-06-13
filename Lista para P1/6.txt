@@ -1,0 +1,21 @@
+/*Sabendo que o último caractere de uma string é ‘\0’, faça um programa que escreva a quantidade de caracteres desta
+string. Crie uma função recursiva que retorne esta quantidade de caracteres. Não é permitido o uso da função strlen.*/
+
+#include <stdio.h>
+
+int contaCaracter(char *string){
+  if (string[0]=='\0'){
+    return 0;
+  }else{
+    string++;
+    return  contaCaracter(string)+1;
+  }
+}
+
+
+int main(void) {
+	char string[100];
+	printf("Digite a string que deseja calcular a quantidade de caracteres: ");
+	scanf("%[^\n]", string);
+	printf("O tamanho é: %d", contaCaracter(string));
+}

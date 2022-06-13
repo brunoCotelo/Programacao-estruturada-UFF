@@ -1,0 +1,42 @@
+/*Escreva um programa para o seguinte problema: determinar se uma palavra A ocorre dentro de uma cadeia de caracteres B, mesmo que de forma não contígua. Fazer uma função que retorne 1 se A ocorrer dentro de B e zero, caso contrário. Exemplo:
+A = "lanterna"
+B = "No dia mais claro, na noite mais densa, o mal sucumbirá ante a minha presença."
+Resposta: A ocorre dentro de B:
+No dia mais claro, na noite mais densa, o mal sucumbirá ante a minha presença.*/
+
+#include <stdio.h>
+#include <string.h>
+#define TAMANHO1 100
+#define TAMANHO2 30
+
+int main(void) {
+  char frase[TAMANHO1], palavra[TAMANHO2];
+  int retorno = 0, contador=0;
+  printf("\nDigite a frase:\n");
+  scanf(" %[^\n]", frase);
+
+  printf("\nDigite a palavra:\n");
+  scanf(" %[^\n]", palavra);
+  
+  
+  printf("\n");
+  for (int i = 0; palavra[i]!='\0';i++){
+    for(int j = 0; frase[j]!='\0';j++){
+      printf("%c, %c\n", palavra[i], frase[j]);
+      if(palavra[i]==frase[j]){
+        printf("Foi\n");
+        contador+=1;
+        break;
+      }
+    }
+  }
+  if (contador == strlen(palavra)){
+    retorno = 1;
+    printf("Palavra tá na frase %d", retorno);
+  }else{
+    printf("Palavra não tá na frase %d", retorno);
+  }
+
+
+  
+}

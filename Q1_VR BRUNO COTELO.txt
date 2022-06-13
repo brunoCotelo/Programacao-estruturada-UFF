@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct NO{
+  int num;
+  struct NO *prox;
+};
+typedef struct NO lista;
+
+void imprimeLista(lista *L){
+  lista *aux = L->prox;
+  while(aux!=L){
+    printf("%d -> ", aux->num);
+    aux = aux->prox;
+  }
+  printf("\n");
+}
+
+lista *ordenaLista(lista *L, int tipo){
+  lista *fim, *p, *k, *pre;
+  int temp;
+  k = L->prox;
+  p = L->prox;
+  while(p->prox!=L){
+    k = L;
+    while(k->prox!=L){
+      if((tipo == 1 && k->num > k->prox->num) || (tipo == 2 && k->num < k->prox->num)){
+        temp = k->num;
+        k->num = k -> prox -> num;
+        k -> prox -> num = temp;
+      } 
+      pre = k;     
+      k = k -> prox;
+    }
+    fim = pre;      
+    p = p->prox;
+  }
+  return L;
+}
+
+lista *combinaLista(lista *L1, lista *L2){
+  lista *p=L1->prox, *k=L2->prox;
+  while(p->prox!=L1){
+    p=p->prox;
+  }
+  while(k->prox!=L2){
+    k=k->prox;
+  }
+  p->prox = L2->prox;
+  k->prox = L1;
+  L1 = ordenaLista(L1, 1);
+  return L1;
+}
+
+lista *insereElem(lista *L, int num){
+  lista *aux, *pre, *el;
+	aux = L;
+	pre = L;
+  el = (lista *)malloc(sizeof(lista));
+  el->num = num;
+  if(L == L->prox){
+    L->prox = el;
+    el->prox = L;
+  }else{
+    while(aux->prox!=L){
+      pre=aux;
+      aux=aux->prox;
+    }
+    pre->prox = el;
+    el->prox = aux;  
+  }
+  L = ordenaLista(L,1);
+  return L;
+}
+
+int main(){
+  int num1;
+	lista *L1,*L2;
+  L1 = (lista*)malloc(sizeof(lista));
+	L1->prox = L1;
+  L2 = (lista*)malloc(sizeof(lista));
+  L2->prox = L2;
+  printf("Digite um numero (L1): ");
+	scanf("%d", &num1);
+	while(num1 >= 0){
+		L1 = insereElem(L1, num1);
+		printf("Digite um numero (L1): ");
+		scanf("%d", &num1);
+	}
+	printf("Digite um numero (L2): ");
+	scanf("%d", &num1);
+	while(num1 >= 0){
+		L2 = insereElem(L2, num1);
+		printf("Digite um numero (L2): ");
+		scanf("%d", &num1);
+	}
+  L1 = combinaLista(L1,L2);
+  imprimeLista(L1);
+}

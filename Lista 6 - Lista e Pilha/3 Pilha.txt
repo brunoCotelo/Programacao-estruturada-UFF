@@ -1,0 +1,47 @@
+/*Seja uma fila F de números inteiros com alocação sequencial estática, faça a declaração desta estrutura e uma função que verifique se o elemento do começo da fila é par.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct NO {
+  int num;
+  struct NO *prox;
+};
+typedef struct NO fila;
+
+
+void insereElem(fila **inicio, fila **fim, int elem){
+  fila *el;
+  el = (fila*) malloc(sizeof(fila));
+  el->num = elem;
+  el->prox = NULL;
+  if ((*inicio) == NULL)
+    (*inicio) = el;
+  else
+    (*fim)->prox = el;
+  (*fim) = el;
+}
+
+void primeiroPar(fila *inicio){
+	if(inicio->num % 2 == 0){
+		printf("È par");
+	}
+	else{
+		printf("É impar");
+	}
+}
+
+int main(void) {
+  fila *inicio, *fim;
+  int num;
+  inicio = NULL;
+  fim = NULL;
+  printf("Digite um num: ");
+  scanf("%d", &num);
+  while (num >=0) {
+    insereElem(&inicio,&fim,num);
+    printf("Digite um num: ");
+    scanf("%d", &num);
+  }
+	primeiroPar(inicio);
+}

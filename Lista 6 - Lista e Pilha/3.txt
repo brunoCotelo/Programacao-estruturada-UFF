@@ -1,0 +1,74 @@
+/* Faça uma função recursiva que escreva se um determinado elemento pertence ou não a uma elemento. Considere que L é simplesmente encadeada, sem nó cabeça e não circular. */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoElemento{
+	int elemento;
+	struct tipoElemento *prox;
+};
+typedef struct tipoElemento lista;
+
+int buscaElem(lista *L, int elem, lista **pre){
+  lista *aux, *preL;
+  aux = L;
+  preL= NULL;
+  while ((aux != NULL) && (elem > aux->elemento)) {
+    preL = aux;
+    aux = aux->prox;
+  }
+  (*pre) = preL;
+  if ((aux != NULL) && (elem == aux->elemento))
+    return 1;
+  return 0;
+}
+
+lista *insereElem(lista *L, int elem) {
+  lista *pre, *el;
+  if (!buscaElem(L,elem,&pre)) {
+    el = (lista *)malloc(sizeof(lista));
+    el->elemento = elem;
+    if (L == NULL || pre == NULL) {
+      el->prox = L;
+      L = el;
+    } 
+		else {
+      el->prox = pre->prox;
+      pre->prox = el;
+    }
+	} 
+	else
+  	printf("--> Elemento já existe\n");
+    return L;
+}
+
+int pertenceRecursiva(lista *L, int num){
+  if(L == NULL){
+		return 0;
+  }else if(L->elemento == num){
+		return 1;
+  }
+  return pertenceRecursiva(L->prox, num);
+}
+
+
+int main(void) {
+ 	lista *L;
+  int numero, pesquisado;
+  L = NULL;
+  printf("Digite um numero: ");
+  scanf("%d", &numero);
+  while (numero >=0) {
+    L = insereElem(L,numero);
+    printf("Digite um numero: ");
+    scanf("%d", &numero);
+  }
+	printf("Digite o numero a ser pesquisado: ");
+	scanf("%d", &pesquisado);
+	if(pertenceRecursiva(L, pesquisado)){
+		printf("O elemento esta contido.");
+	}
+	else{
+		printf("O elemento nao esta contido.");
+	}
+}

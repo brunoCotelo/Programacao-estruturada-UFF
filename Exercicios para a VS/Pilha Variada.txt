@@ -1,0 +1,120 @@
+/* Dado uma pilha que armazene numeros:
+
+- escreva uma função  para ordenar os valores da pilha em ordem crescente.
+- escreva uma função que forneça o maior, o menor e a media aritmetica dos elementos da pilha. 
+- inverter a posição ao dos elementos de uma pilha P.
+- retornar o número de elementos da pilha que possuem valor impar.
+- retornar o número de elementos da pilha que possuem valor par */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct NO{
+	int info;
+	struct NO *prox;
+};
+typedef struct NO pilha;
+
+int menu() {
+  int op; 
+  printf("\n\nEscolha uma opção: \n");
+  printf("1: Ordenar os valores da pilha\n");
+  printf("2: Fornecer o maior, menor e media\n");
+  printf("3: Inverter a pilha\n");
+  printf("4: Numero de elementos pares e numero de impares\n");
+  printf("5: FIM\n");
+  printf("==> ");
+  scanf("%d", &op);
+	printf("\n\n");
+  return op;
+}
+
+
+pilha *push(pilha *topo, int elem){
+    pilha *el;
+    el = (pilha*) malloc(sizeof(pilha));
+    el->info = elem;
+    el->prox = topo;
+    topo = el;
+    return topo;
+}
+
+pilha *pop(pilha *topo){
+    pilha *lixo;
+    if (topo != NULL) {
+        lixo = topo;
+        topo = topo->prox;
+        free(lixo);
+    }
+    return topo;
+}
+
+float fazMedia(int total, int n){
+	return (float) total/n;
+}
+
+void mmm(pilha *topo){
+	int maior = 0, menor = 999999999, acumulador = 0, tamanho = 0;
+	float media;
+	pilha *aux;
+	for(aux = topo; aux; aux = aux->prox){
+		tamanho++;
+		acumulador += aux->info;
+		if(aux->info > maior){
+			maior = aux->info;
+		}
+		else if(aux->info < menor){
+			menor = aux->info;
+		}
+	}
+	media = fazMedia(acumulador, tamanho);
+	printf("O maior numero é %d\nO menor numero é %d\nA media é %.2f", maior, menor, media);
+}
+
+void paresEimpares(pilha *topo){
+	int contadorPar = 0, contadorImpar = 0;
+	pilha *aux;
+	for(aux = topo; aux; aux = aux->prox){
+		if(aux->info % 2 == 0){
+			contadorPar++;
+		}
+		else{
+			contadorImpar++;
+		}
+	}
+	printf("O numero de pares é %d e o numero de impares é %d", contadorPar, contadorImpar);
+}
+
+pilha *invertePilha(pilha *topo){
+
+}
+
+int main(void) {
+  int num, op;
+	pilha *topo;
+  topo = NULL;
+	printf("Digite um numero: ");
+	scanf("%d", &num);
+	while (num >=0) {
+		topo = push(topo, num);
+		printf("Digite um numero: ");
+		scanf("%d", &num);
+	}
+	op = menu();
+	switch (op){
+		case 1: //Ordenar os valores da pilha
+			break;
+		case 2: //Fornecer o maior, menor e media
+			mmm(topo);
+			break;
+		case 3: //Inverter a pilha
+			topo = invertePilha(topo);
+			break;
+		case 4: //Numero de elementos pares e numero de impares
+			paresEimpares(topo);
+			break;
+		default:
+			break;
+	}
+
+}

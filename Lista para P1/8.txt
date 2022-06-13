@@ -1,0 +1,41 @@
+/*Uma empresa que comercializa produtos alimentícios controla seu estoque diariamente. Faça um programa que leia a quantidade de estoque diário do mês passado e que calcule a média mensal em estoque. Determine também o maior e menor estoque lidos.*/
+
+#include <stdio.h>
+
+void maiorEmenor(int *estoqueMes, int diasMes){
+	int maior = 0, menor = 1000000;
+	for(int i = 0; i < diasMes; i++){
+		if(estoqueMes[i] > maior){
+			maior = estoqueMes[i];
+		}
+		if(estoqueMes[i] < menor){
+			menor = estoqueMes[i];
+		}
+	}
+	printf("O maior e o menor estoque foram, respectivamente: %d, %d", maior, menor);
+}
+
+int mediaMensal(int *estoqueMes, int diasMes){
+	int acumulador = 0, media;
+	for(int i = 0; i < diasMes; i++){
+		acumulador += estoqueMes[i];
+	}
+	media = acumulador / diasMes;
+	return media;
+}
+
+int main(void) {
+	int diasMes;
+	printf("Digite o numero de dias no mes: ");
+	scanf("%d", &diasMes);
+
+	int estoqueMes[diasMes];
+
+	for(int i = 0; i < diasMes; i++){
+		printf("Digite o valor do estoque do dia %d: ", i+1);
+		scanf("%d", &estoqueMes[i]);
+	}
+
+	printf("A media do estoque mensal é de: %d\n", mediaMensal(estoqueMes, diasMes));
+	maiorEmenor(estoqueMes, diasMes);
+}	

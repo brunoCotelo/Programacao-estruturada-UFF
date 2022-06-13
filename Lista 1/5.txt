@@ -1,0 +1,15 @@
+/*Faça um programa que leia uma hora (uma variável para hora e outra para minutos) e que calcule e mostre a hora convertida em minutos e em segundos.*/
+
+#include <stdio.h>
+
+int main(void) {
+int horas, minutos, segundos, minutosTotais, segundosTotais;
+printf("Digite o valor em horas: ");
+scanf("%d", &horas);
+printf("Digite o valor em minutos: ");
+scanf("%d", &minutos);
+minutosTotais = (horas*60) + minutos;
+segundosTotais = minutosTotais*60;
+printf("As horas e minutos em apenas minutos equivalem a %d e em segundos a %d", minutosTotais, segundosTotais);
+return 0;
+}

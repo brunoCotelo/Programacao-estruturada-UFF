@@ -1,0 +1,69 @@
+/*Faça uma função que receba uma pilha de inteiros P como parâmetro e que passe seus elementos
+pares para uma pilha chamada PAR, e seus elementos ímpares para uma pilha chamada IMPAR. PAR
+e IMPAR também devem ser parâmetros da função. Considere alocação encadeada dinâmica.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct NO {
+  int num;
+  struct NO *prox;
+};
+typedef struct NO pilha;
+
+pilha *push(pilha *P, int elem){
+  pilha *el;
+  el = (pilha*) malloc(sizeof(pilha));
+  el->num = elem;
+  el->prox = P;
+  P = el;
+  return P;
+}
+
+pilha *pop(pilha *P){
+  pilha *lixo;
+  if (P != NULL) {
+    lixo = P;
+    P = P->prox;
+    free(lixo);
+  }
+  return P;
+}
+
+void funcaoPrinta(pilha *P){
+	printf("\nPilha -> ");
+  while (P != NULL) {
+    printf("%d -> ", P->num);
+    P = pop(P);
+  } 
+}
+
+void parOuImpar(pilha *P, pilha *Par, pilha *Impar){
+	while(P != NULL){
+		if(P->num % 2 == 0){
+			push(Par, P->num);
+			pop(P);
+		}
+		else{
+			push(Impar, P->num);
+			pop(P);
+		}
+	}
+}
+
+int main(void) {
+  pilha *P1, *Ppar, *Pimpar;
+  int num;
+  P1 = NULL;
+  printf("Digite um num (P1): ");
+  scanf("%d", &num);
+  while (num >= 0) {
+    P1 = push(P1,num);
+    printf("Digite um num (P1): ");
+    scanf("%d", &num);
+  }
+  funcaoPrinta(P1);
+	parOuImpar(P1, Ppar, Pimpar);
+	funcaoPrinta(Ppar);
+	funcaoPrinta(Pimpar);
+}

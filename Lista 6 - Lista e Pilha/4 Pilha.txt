@@ -1,0 +1,102 @@
+/*Sabendo que um DEQUE é um tipo especial de lista linear onde as inserções e remoções de
+elementos podem ser realizadas nos dois extremos da estrutura, crie uma função para remoção de elementos. Considere alocação sequencial estática, onde o DEQUE pode guardar no máximo N elementos.
+• Faça o desenho da estrutura do DEQUE D, onde sejam especificadas as variáveis de
+controle: início, fim e total.
+• A função possuirá como parâmetros: D (o DEQUE) e asuas variáveis de controle (inicio,
+fim e total) e POS (que indica a posição de onde o elemento será removido: I – início e F –
+final).
+• Deve ser usada a idéia de deques circulares (similar às filas circulares)*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define N 5
+struct NO {
+  int num;
+  struct NO *prox;
+};
+typedef struct NO lista;
+
+int buscaElem(lista *D, int elem, lista **pre){
+  lista *aux, *preL;
+  aux = D;
+  preL= NULL;
+  while ((aux != NULL) && (elem > aux->num)) {
+    preL = aux;
+    aux = aux->prox;
+  }
+  (*pre) = preL;
+  if ((aux != NULL) && (elem == aux->num))
+    return 1;
+	return 0;
+}
+
+lista *insereElem(lista *D, int elem) {
+  lista *pre, *el;
+    el = (lista *)malloc(sizeof(lista));
+    el->num = elem;
+    	if (D == NULL || pre == NULL) {
+        el->prox = D;
+        D = el;
+      } 
+			else {
+        el->prox = pre->prox;
+        pre->prox = el;
+      }
+  return D;
+}
+
+lista *retiraInicio(lista *L){
+  lista *aux1 = L;
+  aux1 = L->prox;
+  L->prox = aux1->prox;
+  L->prox--;
+  return aux1;
+}
+
+lista *retiraFim(lista *L){
+  lista *ultimo = L,
+  *penultimo = L;
+  while(ultimo->prox != NULL){
+    penultimo = ultimo;
+    ultimo = ultimo->prox;
+  }
+  penultimo->prox = NULL;
+  ultimo->prox= penultimo;
+  return ultimo;
+}
+
+void imprimeLista(lista *D) {
+  lista *aux;  
+  aux = D;
+  while (aux != NULL) {
+    printf("%d -> ", aux->num);
+    aux = aux->prox;
+  }   
+}
+
+int main(void) {
+	char inicioOuFim[1];
+	lista *D;
+  int num;
+  D = NULL;
+  for(int i = 0; i < N; i++) {
+    printf("Digite um num: ");
+    scanf("%d", &num);
+		D = insereElem(D,num);
+  }
+	printf("\n\nLista -> ");
+  imprimeLista(D);
+	printf("\n\nDigite se deseja remover um elemento do inicio ou do fim (I/F): ");
+	scanf(" %s", inicioOuFim);
+	if(strcmp(inicioOuFim, "I") == 0){
+		D = retiraInicio(D);
+	}
+	else if(strcmp(inicioOuFim, "F") == 0){
+		retiraFim(D);
+	}
+	else{
+		printf("Comando invalido");
+	}
+	imprimeLista(D);
+}

@@ -1,0 +1,22 @@
+#include "stdio.h"
+int areaComodos(){
+  float altura, largura, somatorio, area;
+  altura = 1;
+  while(altura > 0){
+    printf("Digite a altura: ");
+    scanf("%f", &altura);
+    if(altura <= 0){
+    break;
+    }
+    printf("Digite a largura: ");
+    scanf("%f", &largura);
+    area = altura * largura;
+    somatorio += area;
+  }
+  return somatorio;
+}
+
+int main (void){
+  printf("%d", areaComodos());
+return 0;
+}

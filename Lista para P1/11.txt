@@ -1,0 +1,84 @@
+#include <stdio.h>
+void somar (int X[], int Y[]){
+	int resSoma;
+	for(int i = 0; i < 3; i++){
+		resSoma = X[i]+Y[i];
+		printf("%d\n", resSoma);
+	}
+}
+
+void subt (int X[],int Y[]){
+	int resSub;
+	for(int i = 0; i < 3; i++){
+		resSub = X[i]-Y[i];
+		printf("%d\n", resSub);
+	}
+}
+void pesq (int X[],int Y[]){
+	int num, verify = 0;
+	printf("Qual numero deseja buscar: ");
+	scanf("%d", &num);
+	for(int i = 0; i < 3; i++){
+		if(num == X[i]){
+			printf("Esta contido em X na posiçao %d\n", i);
+			verify = 1;
+		}
+		if(!verify && i == 2){
+			printf("Desculpa, nao tem em X...\n");
+			verify = 0;
+		}
+	}
+	for(int j = 0; j < 3; j++){
+		if(num == Y[j]){
+			printf("Esta contido em Y na posiçao %d\n", j);
+			verify = 1;
+		}
+		if(!verify && j == 2){
+			printf("Desculpa, nao tem em Y...");
+		}
+	}
+}
+void mostra (int X[],int Y[]){
+	printf("O vetor X é formado por: ");
+	for(int i = 0; i < 3; i++){
+		printf("%d, ", X[i]);
+	}
+	printf("\nO vetor Y é formado por: ");
+	for(int j = 0; j < 3; j++){
+		printf("%d, ", Y[j]);
+	}
+}
+
+
+int main (void){
+	int X[3], Y[3], menu;
+
+
+	for(int i = 0; i < 3; i++){
+		printf("Digite um valor para armazenar em X: ");
+		scanf("%d", &X[i]);
+		printf("Digite um valor para armazenar em Y: ");
+		scanf("%d", &Y[i]);
+	}
+
+
+	printf("\n\nQual opçao voce deseja?\n\n1 - Somar X e Y\n2 - Subtrair X e Y\n3 - Pesquisar um elemento em X e Y\n4 - Mostrar X e Y\n5 - Encessar o programa\n\n");
+	scanf("%d", &menu);
+
+	if(menu == 1){
+		somar(X, Y);
+	}
+	else if(menu == 2){
+		subt(X, Y);
+	}
+	else if(menu == 3){
+		pesq(X, Y);
+	}
+	else if(menu == 4){
+		mostra(X, Y);
+	}
+	else{
+		printf("Obrigado pela preferencia!");
+	}
+	return 0;
+}

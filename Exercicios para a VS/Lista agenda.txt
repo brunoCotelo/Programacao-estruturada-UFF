@@ -1,0 +1,132 @@
+/* Construir um programa em "C" que implementa uma agenda eletrônica. O programa deve ter um menu com as seguintes opções:
+1- Entrar um nome na agenda
+2- Imprimir na tela os dados de uma das pessoas cadastradas (consulta por nome)
+3- Imprimir os nomes que começam pela letra indicada */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct tipoNO{
+  char nome[40];
+  int numero;
+  struct tipoNO *prox;
+};
+typedef struct tipoNO dados;
+
+int menu(){
+  int opcao;
+  printf("\nEscolha uma opção:\n");
+  printf("1- Entre com o nome na agenda\n");
+  printf("2- Imprimir dados da pessoa desejada\n");
+  printf("3- Imprimir Lista de nomes com a letra indicada\n");
+  printf("4- Encerrar programa\n");
+	printf("=> ");
+  scanf("%d", &opcao);
+  return opcao;
+}
+
+int buscaElem(dados *L, char *nome, dados **pre){
+  dados *aux, *preL;
+  aux = L->prox;
+  preL= L;
+  while ((aux != NULL) && (strcmp(nome,aux->nome) > 0)) {
+    preL = aux;
+    aux = aux->prox;
+  }
+  (*pre) = preL;
+  if ((aux != NULL) && (strcmp(nome,aux->nome) == 0))
+    return 1;
+  return 0;
+}
+
+dados *insereElem(dados *L, char *nome, int numero) {
+  dados *el;
+  el = (dados *)malloc(sizeof(dados));
+  el->numero = numero;
+  strcpy(el->nome, nome);
+  el->prox=NULL;
+  if (L == NULL) {
+    L = el;
+  } else {
+    el->prox = L->prox;
+    L->prox = el;
+  }
+  return L;
+}
+
+void buscaNome(dados *L, char *nome){
+  dados *aux;
+  aux = L;
+  while(aux->prox != NULL){
+    if(strcmp(aux->nome, nome) == 0){
+			printf("O nome é %s e o numero é %d", aux->nome, aux->numero);
+			break;
+  	}
+	aux = aux->prox;
+	}
+}
+
+void listaNomes(dados *L, char letra){
+  dados *aux;
+  aux = L;
+  while(aux != NULL){
+		if (aux->nome[0] == letra){
+			printf("%s ", aux->nome);
+    }
+    aux = aux->prox;
+	}
+}
+
+void imprimeLista(dados *L) {   
+  if (L != NULL) {
+    printf("%s -> ", L->nome);
+    printf("%d -> ", L->numero);
+    imprimeLista(L->prox);
+  }
+}
+
+int main(void) {
+  dados *L;
+  char nome[40];
+	char letra;
+  L=NULL;
+  int opcao, numero;
+
+  do{
+    opcao=menu();
+
+    switch (opcao){
+      case 1:
+        printf("\nDigite um nome para inserir: ");
+        scanf("%s", nome);
+        printf("\nDigite um numero para inserir: ");
+        scanf("%d", &numero);
+        L = insereElem(L, nome, numero);
+        imprimeLista(L);
+        break;
+
+      case 2:
+        printf("Digite nome desejado: ");
+        scanf("%s", nome);
+        buscaNome(L, nome);
+        break;
+
+      case 3:
+        printf("Digite letra: ");
+        scanf(" %c", &letra);
+        listaNomes(L, letra);
+        break;
+
+      case 4:
+        printf("Obrigada");
+        break;
+
+      default:
+        printf("escolha outro!!!");
+        break;
+    }
+  } while (opcao!=4);
+  
+  return 0;
+}

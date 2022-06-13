@@ -1,0 +1,47 @@
+/*Faça um programa que leia o quadro de cargos e salários de uma cargo e que calcule a média salarial. 
+Crie uma estrutura com os campos cargo e salário  
+Ao final do programa escreva os cargos que estão acima da média calculada*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoCargo{
+	char nomeCargo[50];
+	float salario;
+};
+typedef struct tipoCargo Cargo;
+
+void preencheCargo(Cargo *cargo){
+		printf("Digite o cargo: ");
+		scanf(" %[^\n]", cargo->nomeCargo);
+		printf("Digite o salario: ");
+		scanf("%f", &cargo->salario);
+}
+
+float calculaMedia(float salarios, int n){
+	return salarios/n;
+}
+
+void verificaSalariosMedia(Cargo *cargos, int n, float media){
+	printf("Cargos que recebem acima da media salarial: \n");
+	for(int j = 0; j < n; j++){
+		if(cargos[j].salario > media){
+			printf("%s\n", cargos[j].nomeCargo);
+		}
+	}
+}
+
+int main(){
+	int n;
+	float somaSalarios = 0, mediaSalarial;
+	printf("Quantos cargos e salarios serão analisados: ");
+	scanf("%d", &n);
+	Cargo *cargos;
+	cargos = (Cargo*) malloc(n * sizeof(Cargo));
+	for(int i = 0; i < n; i++){
+		preencheCargo(&cargos[i]);
+		somaSalarios += cargos[i].salario;
+	}
+	mediaSalarial = calculaMedia(somaSalarios, n);
+	verificaSalariosMedia(cargos, n, mediaSalarial);
+}

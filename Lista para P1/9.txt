@@ -1,0 +1,39 @@
+/*Escreva um programa que gere a tabuada de 1 até um valor n>0 na forma de uma tabela tal que, na posição da linha i e coluna j da tabela, deve-se encontrar o valor i*j. A tabuada deve ser guardada em uma matriz, e após a sua criação o programa deve dar ao usuário a opção de escolher um número X e ter a sua tabuada impressa. O programa encerra quando o usuário digitar um número negativo.*/
+
+#include <stdio.h>
+
+
+void printamatriz(n){
+	int matriz[n][n];
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			printf("  %5d  ", (i+1)*(j+1));
+			if(j == n - 1){
+			printf("\n");
+			}
+		}
+	}
+}
+
+void selecionaTabuada(){
+	int t = 1;
+	while(t >=1){
+		printf("\n\nDigite o valor da tabuada que deseja: ");
+		scanf("%d", &t);
+		if(t <= 0){
+			break;
+		}
+		for(int i = 0; i < 10; i++){
+			printf("\n%d x %d = %d\n", t, i+1, t*1+i);
+		}
+	}
+}
+
+
+int main(void) {
+	int n;
+	printf("\nDigite o valor de N termos que deseja a tabuada: ");
+	scanf("%d", &n);
+	printamatriz(n);
+	selecionaTabuada();
+}

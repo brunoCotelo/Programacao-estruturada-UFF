@@ -1,0 +1,35 @@
+/*Considere um vetor que guarde 100 números reais. Faça um programa que preencha este vetor. Após o vetor preenchido multiplique seus valores ímpares por 3 e divida os valores pares por 2. Escreva o maior elemento do vetor*/
+
+#include <stdio.h>
+#define TAM 100
+
+int main(void) {
+	int num[TAM];
+	int impar, par, maior = 0;
+	for(int i = 0; i < TAM; i++){
+		printf("Digite o valor para preencher o vetor: ");
+		scanf("%d", &num[i]);
+	}
+
+	for(int j = 0; j < TAM; j++){
+		if(num[j] % 2 == 0){
+			num[j] = num[j] / 2;
+		}
+
+		else{
+			num[j] = num[j] * 3;
+		}
+	}
+
+		for(int c = 0; c < TAM; c++){
+		printf(" %d \n", num[c]);
+	}
+
+
+	for(int k = 0; k < TAM; k++){
+		if(num[k] > maior){
+			maior = num[k];
+		}
+	}
+	printf("\nO maior numero é: %d", maior);
+}

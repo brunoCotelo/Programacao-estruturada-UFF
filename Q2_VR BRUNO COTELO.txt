@@ -1,0 +1,203 @@
+/*(valor 5,0) Para esta questão considerar listas de inteiros simplesmente encadeadas, não
+circulares e sem nós cabeça. Faça um programa em C que:
+• Crie duas listas L1 e L2. Tais listas representarão dois conjuntos distintos. Deve
+ser implementada uma função insereElem. Uma lista não precisa estar com seus
+elementos ordenados, mas não pode possuir elementos repetidos.
+• As seguintes operações devem ser implementadas:
+o Interseção: L1 ∩ L2
+o União: L1 ∪ L2
+o Subconjunto: Verificar se L1 é um subconjunto de L2 ou vice-versa
+o Pertinência: verificar se um elemento pertence a L1 ou L2.
+• Deve ser criado um menu na tela com as operações disponíveis. O programa
+só deve terminar quando o usuário escolher a opção de finalização. Para cada
+operação acima, deve ser criada uma função separada.*/
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct tipoLista{
+  int num;
+  struct tipoLista *prox;
+};
+typedef struct tipoLista lista;
+
+
+int menu() {
+  int op;
+  printf("\n\nEscolha uma operação: \n");
+  printf("1: Interseção\n");
+  printf("2: União\n");
+  printf("3: Subconjunto\n");
+  printf("4: Pertinencia\n");
+  printf("5: FIM\n");
+  printf("==> ");
+  scanf("%d", &op);
+        printf("\n\n");
+  return op;
+}
+
+
+int buscaElem(lista *L, int elem, lista **pre){
+  lista *aux, *preL;
+  aux = L;
+  preL= NULL;
+  while ((aux != NULL) && (elem > aux->num)) {
+    preL = aux;
+    aux = aux->prox;
+  }
+  (*pre) = preL;
+  if ((aux != NULL) && (elem == aux->num))
+    return 1;
+  return 0;
+}
+
+
+lista *insereElem(lista *L, int elem) {
+  lista *pre, *el;
+  if (!buscaElem(L,elem,&pre)) {
+    el = (lista *)malloc(sizeof(lista));
+    el->num = elem;
+    if (L == NULL || pre == NULL) {
+      el->prox = L;
+      L = el;
+    }
+                else {
+      el->prox = pre->prox;
+      pre->prox = el;
+    }
+        }
+    return L;
+}
+
+
+lista *uniao(lista *original, lista *L3){
+  lista* p;
+  int i = 0;
+  for (p = original; p; p = p->prox){
+    L3 = insereElem(L3, p->num);
+  }
+  return L3;
+}
+
+
+lista *intersecao(lista *L1, lista *L2, lista *L3){
+  int j = 0;
+  lista *p, *k;
+  for (p = L1; p; p = p->prox){
+    for (k = L2; k; k = k->prox){
+      if(p->num == k->num){
+        L3 = insereElem(L3, p->num);
+      }
+    }
+  }
+  return L3;
+}
+
+
+void imprimeLista(lista *L3) {
+  lista *aux;
+  aux = L3;
+	printf("\n");
+  while (aux != NULL) {
+    printf("%d -> ", aux->num);
+    aux = aux->prox;
+  }
+}
+
+int contem(lista* inter, int numero){
+  lista* aux = inter;
+  while(aux != NULL){
+    if (aux->num == numero)
+      return 1;
+    aux = aux->prox;
+  }
+  return 0;
+}
+
+
+void subconjunto(lista *L1, lista *L2){
+  int boleano = 0;
+	lista  *p, *k;
+	for(p = L1; p; p = p->prox){
+		for(k = L2; k; k = k->prox){	
+			if(L1->num == L2->num){
+				printf("");
+			}
+			else{
+				printf("");
+			}
+		}
+	}
+}
+
+
+void pertinencia(lista *L1, lista *L2, int pesq){
+  int k = 0;
+  lista *U, *p;
+  U = uniao(L1, L2);
+  for (p = U; p; p = p->prox){
+    if(p->num == pesq){
+      printf("O numero esta contido em uma das listas!");
+      k = 1;
+      break;
+    }
+  }
+  if(k == 0){
+    printf("O numero nao esta contido nas listas ");
+  }
+}
+
+
+int main(){
+  int num1, op, numPert;
+  lista *L1, *L2, *L3;
+  L1 = NULL;
+  L2 = NULL;
+  L3 = NULL;
+  printf("Digite um numero (L1): ");
+  scanf("%d", &num1);
+  while(num1 >= 0){
+    L1 = insereElem(L1, num1);
+    printf("Digite um numero (L1): ");
+    scanf("%d", &num1);
+  }
+  printf("Digite um numero (L2): ");
+  scanf("%d", &num1);
+  while(num1 >= 0){
+    L2 = insereElem(L2, num1);
+    printf("Digite um numero (L2): ");
+    scanf("%d", &num1);
+  }
+		op = menu();
+		while(op != 5){
+			switch (op){
+				case 1:
+					printf("••••••••••• Realizando operação de interseção •••••••••••\n");
+					L3 = intersecao(L1, L2, L3);
+					imprimeLista(L3);
+					break;
+				case 2:
+					printf("••••••••••• Realizando operação de união •••••••••••\n");
+					L3 = uniao(L1, L3);
+					L3 = uniao(L2, L3);
+					imprimeLista(L3);
+					break;
+				case 3:
+					printf("••••••••••• Realizando operação de subconjunto •••••••••••\n");
+					subconjunto(L1, L2);
+					break;
+				case 4:
+					printf("Digite o numero que deseja buscar: ");
+					scanf("%d", &numPert);
+					printf("\n••••••••••• Realizando operação de pertinencia •••••••••••\n");
+					pertinencia(L1, L2, numPert);
+					break;
+				case 5:
+					printf("\n");
+					break;
+			}
+			op = menu();
+		}
+}

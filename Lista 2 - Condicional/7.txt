@@ -1,0 +1,28 @@
+/*Faça um programa que leia a quantidade de horas aula dadas por dois professores e o valor por hora recebido por cada um. Mostrar na tela qual dos professores tem salário total maior*/
+
+#include <stdio.h>
+
+int main(void) {
+int hProf1, hProf2;
+float salario1, salario2, horaaula1, horaaula2;
+printf("Digite o valor de horas/aula dadas pelo 1 professor: ");
+scanf("%d", &hProf1);
+printf("Digite o valor de horas/aula dadas pelo 2 professor: ");
+scanf("%d", &hProf2);
+printf("Digite o valor do salario do 1 professor: ");
+scanf("%f", &horaaula1);
+printf("Digite o valor do salario do 2 professor: ");
+scanf("%f", &horaaula2);
+salario1 = hProf1 * horaaula1;
+salario2 = hProf2 * horaaula2;
+if(salario1 > salario2){
+printf("O professor 1 tem o salario total maior");
+}
+else if(salario2 > salario1){
+printf("O professor 2 tem o salario total maior");
+}
+else{
+printf("Os dois professores tem o mesmo salario total");
+}
+return 0;
+}

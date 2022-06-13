@@ -1,0 +1,35 @@
+/*Um funcionário recebe um salário fixo mais 6% de comissão sobre suas vendas. Faça um programa que leia o salário de um funcionário, o valor total de suas vendas e apresente o seu salário final. Considere N funcionários (use alocação dinâmica).*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoFuncionarios{
+	float salario;
+	float vendas;
+};
+typedef struct tipoFuncionarios Funcionarios;
+
+void preencheFuncionarios(Funcionarios *funcionarios){
+	printf("Digite o valor do salario: ");
+	scanf("%f", &funcionarios->salario);
+	printf("Digite o valor total das vendas: ");
+	scanf("%f", &funcionarios->vendas);
+}
+
+float calculaSalario(Funcionarios *funcionarios, int i){
+	return (funcionarios[i].vendas * 0.06)+ funcionarios[i].salario;
+}
+
+int main(){
+	int n;
+	float salarioFinal;
+	printf("Digite o numero N de funcionarios: ");
+	scanf("%d", &n);
+	Funcionarios *funcionarios;
+	funcionarios = (Funcionarios*) malloc(n * sizeof(Funcionarios));
+	for(int i = 0; i < n; i++){
+		preencheFuncionarios(funcionarios);
+		salarioFinal = calculaSalario(funcionarios, i);
+		printf("O valor total do salario é de R$%.2f\n", salarioFinal);
+	}
+}

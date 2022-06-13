@@ -1,0 +1,37 @@
+/*Faça um programa que leia um valor inteiro e que informe se este valor é par ou impar.*/
+
+#include <stdio.h>
+#include "stdio.h"
+void tabuada(int N){
+  int i, mult;
+  for(i = 0; i < 11; i++){
+    mult = N * i;
+    printf("\n\n%d x %d = %d", N, i, mult);
+  }
+}
+
+
+int main (void){
+  int N;
+  printf("Digite um valor entre 0 e 9: ");
+  scanf("%d", &N);
+  if(N > 0 && N <= 9){
+    tabuada(N);
+  }
+  else{
+    printf("O valor nao esta dentro dos possiveis. ");
+  }
+return 0;
+}
+int main(void) {
+int valor, parouimpar;
+scanf("%d", &valor);
+parouimpar = valor % 2;
+if(parouimpar == 0){
+printf("O valor é par");
+}
+else{
+printf("O valor é impar");
+}
+return 0;
+}

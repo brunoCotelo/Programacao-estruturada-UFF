@@ -1,0 +1,48 @@
+/*Foi feita uma estatística em 20 estados brasileiros para coletar dados sobre acidentes de trânsito. Foram informados dados como: a sigla do estado, o número de veículos, e a quantidade de acidentes. Faça um programa que calcule e mostre:
+• a sigla do estado que possui maior número de carros;
+• considerando o número de acidentes e o número de carros que circulam no estado, informar o estado com menor índice de acidentes de trânsito;
+• o número total de acidentes de trânsito computado.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#define N 20
+
+struct tipoEstados{
+	int numAcidentes;
+	int numCarros;
+	char sigla[10];
+};
+typedef struct tipoEstados Estados;
+
+void preencheEstados(Estados *estados){
+	printf("Digite a sigla do estado: ");
+	scanf("%s", estados->sigla);
+	printf("Digite o numero de acidentes: ");
+	scanf("%d", &estados->numAcidentes);
+	printf("Digite o numero de carros do estado: ");
+	scanf("%d", &estados->numCarros);
+}
+
+float achaIndice(Estados estados){
+	return estados.numAcidentes/estados.numCarros;
+}
+
+int main(){
+	int maisCarros = 0, indice, totalAcidentes = 0, indice2;
+	char estadoMaisCarros[10];
+	float indiceAcidente = 9999999999999;
+	Estados estados[N];
+	for(int i = 0; i < N; i++){
+		preencheEstados(&estados[i]);
+		totalAcidentes += estados[i].numAcidentes;
+		if(estados[i].numCarros > maisCarros){
+			maisCarros = estados[i].numCarros;
+			indice = i;
+		}
+		if(achaIndice(estados[i])<indiceAcidente){
+			indiceAcidente = achaIndice(estados[i]);
+			indice2 = i;
+		}
+	}
+	printf("O estado com mais carros é %s;\nO estado com menor indice de acidentes é %s;\nO numero total de acidentes é %d", estados[indice].sigla, estados[indice2].sigla, totalAcidentes);
+}

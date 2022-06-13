@@ -1,0 +1,29 @@
+/*Faça um programa que leia os N salários dos funcionários de uma empresa. Calcule a média salarial da empresa e escreva a quantidade de funcionários que possuem salário acima da média.*/
+
+#include <stdio.h>
+
+int main(void) {
+	int n, acima = 0; 
+	float media, acumulo = 0;
+	printf("Digite o numero de funcionarios: ");
+	scanf("%d", &n);
+
+	float salario[n];
+
+	for(int i = 0; i < n; i++){
+		printf("Digite o valor do salario do profissional: ");
+		scanf("%f", &salario[i]);
+
+	}
+	for(int j = 0; j < n; j++){
+		acumulo += salario[j];
+	}
+	media = acumulo / n;
+
+	for(int crl = 0; crl < n; crl++){
+		if(salario[crl] > media){
+			acima++;
+		}
+	}
+	printf("Nessa empresa existem %d funcionarios com salarios acima da media", acima);
+}	

@@ -1,0 +1,300 @@
+/*Considere duas listas encadeadas L1 e L2, onde cada nó da lista possui duas partes: dado, que guarda um número inteiro e prox, que guarda o endereço do próximo nó. Para cada item abaixo, faça uma função que receba as duas listas como parâmetros e as concatene de acordo com as características especificadas. Para concatenar L1 com L2 basta juntar o final de L1 com o começo de L2, formando uma única lista com endereço inicial em L1.
+a. L1 e L2 são simplesmente encadeadas, não circulares e sem nós cabeça;
+b. L1 e L2 são simplesmente encadeadas, circulares e sem nós cabeça;
+c. L1 e L2 são simplesmente encadeadas, circulares e com nós cabeça;
+d. L1 e L2 são simplesmente encadeadas, não circulares e com nós cabeça;
+e. L1 e L2 são duplamente encadeadas, circulares e com nós cabeça;*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct NO{
+	int num;
+	struct NO *prox, *ant;
+};
+typedef struct NO listaDE;
+
+struct NO2{
+	int num;
+	struct NO2 *prox;
+};
+typedef struct NO2 lista;
+
+int menu1(){
+	int op1;
+	printf("\nEscolha uma opção: \n");
+  printf("1: As listas serao simplesmente encadeadas\n");
+  printf("2: As listas serao duplamente encadeadas\n");
+	printf("==> ");
+  scanf("%d", &op1);
+	printf("\n\n");
+  return op1;
+}
+
+int menu2(){
+	int op2;
+	printf("\nEscolha uma opção: \n");
+  printf("1: As listas serao não circulares\n");
+  printf("2: As listas serao circulares\n");
+	printf("==> ");
+  scanf("%d", &op2);
+	printf("\n\n");
+  return op2;
+}
+
+int menu3(){
+	int op3;
+	printf("\nEscolha uma opção: \n");
+  printf("1: As listas terão nó cabeça\n");
+  printf("2: As listas não terão nó cabeça\n");
+	printf("==> ");
+  scanf("%d", &op3);
+	printf("\n\n");
+  return op3;
+}
+
+lista *insereElemENCSNC(lista *L, int elem) {
+  lista *pre, *el;
+    el = (lista *)malloc(sizeof(lista));
+    el->num = elem;
+    if (L == NULL || pre == NULL) {
+      el->prox = L;
+      L = el;
+    } 
+		else {
+      el->prox = pre->prox;
+      pre->prox = el;
+    }
+  return L;
+}
+
+lista *concatenaENCSNC(lista *L1, lista *L2){
+	 lista *p; 
+	if (L2 != NULL){ 
+		if (L1!=NULL){
+ 			p = L1; 
+			while (p->prox != NULL){
+ 				p = p->prox; 
+			} 
+			p->prox = L2; 
+		} 
+		else{ 
+			L1 = L2;
+		} 
+	}
+	return L1;
+}
+
+lista *insereElemENCCNC(lista *L, int elem) {
+	lista *pre, *el;
+		el = (lista *)malloc(sizeof(lista));
+		el->num = elem;
+		el->prox = pre->prox;
+		pre->prox = el;
+	return L;
+}
+
+lista* concatenaENCCNC(lista *L1, lista *L2){
+    lista *aux1;
+    aux1 = L1;
+    if (L2->prox != NULL) {
+        aux1 = L1;
+        while (aux1->prox != NULL)
+            aux1 = aux1->prox;
+        aux1->prox = L2->prox;
+    }
+    free(L2);
+    return L1;
+}
+
+lista* concatenaCCNC(lista *L1, lista *L2){
+  lista *aux1, *aux2;
+  if (L2->prox != L2) {
+    aux1 = L1;
+    while (aux1->prox != L1)
+      aux1 = aux1->prox;
+      aux1->prox = L2->prox;
+      aux2 = L2;
+    while (aux2->prox != L2)
+      aux2 = aux2->prox;
+      aux2->prox = L1;
+  }
+  free(L2);  
+  return L1;
+}
+
+listaDE *insereElemDE(listaDE *L, int elem) {
+	listaDE *pre, *el;
+	el = (listaDE *)malloc(sizeof(listaDE));
+	el->num = elem;
+	el->prox = pre->prox;
+	el->ant = pre;
+	pre->prox->ant = el;
+	pre->prox = el;
+	return L;
+}
+
+listaDE* concatenaDE(listaDE *L3, listaDE *L4){
+    listaDE *aux1, *aux2;
+    if (L4->prox != L4) {
+        aux1 = L3->ant;
+        aux1->prox = L4->prox;
+        L4->prox->ant = aux1;
+        aux2 = L4->ant;
+        aux2->prox = L3;
+        L3->ant = aux2;
+    }
+  free(L4);
+  return L3;
+}
+
+
+void imprimeLista (lista *L){
+	while (L!=NULL){
+		printf("%d -> ", L->num);
+		L=L->prox;
+	}
+}
+
+
+int main(){
+	int num1;
+	lista *L1, *L2;
+	listaDE *L3, *L4;
+	int op1, op2, op3;
+	op1 = menu1();
+	switch (op1){
+		case 1:
+			op2 = menu2();
+			switch(op2){
+				case 1:
+					op3 = menu3();
+					switch(op3){
+						case 1: //simplesmente encadeada nao circular com no cabeça
+							L1 = (lista*) malloc(sizeof(lista));
+							L1->prox = NULL;
+							L2 = (lista*) malloc(sizeof(lista));
+							L2->prox = NULL;
+							printf("Digite um numero (L1): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L1 = insereElemENCCNC(L1, num1);
+								printf("Digite um numero (L1): ");
+  							scanf("%d", &num1);
+							}
+							printf("Digite um numero (L2): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L2 = insereElemENCCNC(L2, num1);
+								printf("Digite um numero (L2): ");
+  							scanf("%d", &num1);
+							}
+							L1 = concatenaENCCNC(L1, L2);
+							imprimeLista(L1);
+							break;
+						case 2: //simplesmente encadeada nao circular sem no cabeça
+							L1 = NULL;
+							L2 = NULL;
+							printf("Digite um numero (L1): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L1 = insereElemENCSNC(L1, num1);
+								printf("Digite um numero (L1): ");
+  							scanf("%d", &num1);
+							}
+							printf("Digite um numero (L2): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L2 = insereElemENCSNC(L2, num1);
+								printf("Digite um numero (L2): ");
+  							scanf("%d", &num1);
+							}
+							L1 = concatenaENCSNC(L1,L2);
+							imprimeLista(L1);
+							break;
+						default:
+							break;
+					}
+					break;
+				case 2:
+					op3 = menu3();
+					switch(op3){
+						case 1: //simplesmente encadeada circular com no cabeça
+							L1 = (lista*) malloc(sizeof(lista));
+							L1->prox = NULL;
+							L2 = (lista*) malloc(sizeof(lista));
+							L2->prox = NULL;
+							printf("Digite um numero (L1): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L1 = insereElemENCCNC(L1, num1);
+								printf("Digite um numero (L1): ");
+  							scanf("%d", &num1);
+							}
+							printf("Digite um numero (L2): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L2 = insereElemENCCNC(L2, num1);
+								printf("Digite um numero (L2): ");
+  							scanf("%d", &num1);
+							}
+							L1 = concatenaCCNC(L1, L2);
+							imprimeLista(L1);
+							break;
+						case 2: //simplesmente encadeada circular sem no cabeça
+							L1 = (lista*) malloc(sizeof(lista));
+							L1->prox = NULL;
+							L2 = (lista*) malloc(sizeof(lista));
+							L2->prox = NULL;
+							printf("Digite um numero (L1): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L1 = insereElemENCCNC(L1, num1);
+								printf("Digite um numero (L1): ");
+  							scanf("%d", &num1);
+							}
+							printf("Digite um numero (L2): ");
+  						scanf("%d", &num1);
+							while(num1 >= 0){
+								L2 = insereElemENCCNC(L2, num1);
+								printf("Digite um numero (L2): ");
+  							scanf("%d", &num1);
+							}
+							L1 = concatenaCCNC(L1, L2);
+							imprimeLista(L1);
+							break;
+						default:
+							break;
+					}
+					break;
+				default:
+					break;
+			}
+			break;
+		case 2: //duplamente encadeada circular com nó cabeça
+			L3 = (listaDE*) malloc(sizeof(listaDE));
+			L3->prox = L3;
+			L3->ant = L3;
+			L4 = (listaDE*) malloc(sizeof(listaDE));
+			L4->prox = L4;
+			L4->ant = L4;
+			printf("Digite um numero (L1): ");
+  		scanf("%d", &num1);
+			while(num1 >= 0){
+				L1 = insereElemENCCNC(L1, num1);
+				printf("Digite um numero (L1): ");
+  			scanf("%d", &num1);
+			}
+			printf("Digite um numero (L2): ");
+  		scanf("%d", &num1);
+			while(num1 >= 0){
+				L2 = insereElemENCCNC(L2, num1);
+				printf("Digite um numero (L2): ");
+  			scanf("%d", &num1);
+			}
+			L3 = concatenaDE(L3, L4);
+			break;
+		default:
+			break;
+	}
+}

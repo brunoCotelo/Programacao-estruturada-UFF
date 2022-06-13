@@ -1,0 +1,16 @@
+/*Faça um programa que escreva quanto um consumidor deverá pagar na sua conta de luz. Os
+dados de entrada do algoritmo devem ser: o nome do consumidor, o seu consumo mensal em
+quilowatts, e o preço equivalente a um quilowatt.*/
+
+#include <stdio.h>
+
+int main(void) {
+float qWatt, valor, conta;
+printf("Digite o valor de quilowatts consumidos no mes: ");
+scanf("%f", &qWatt);
+printf("Digite o valor do preço do quilowatt no mes: ");
+scanf("%f", &valor);
+conta = qWatt * valor;
+printf("O valor da conta desse mes é R$%.2f ", conta);
+  return 0;
+}

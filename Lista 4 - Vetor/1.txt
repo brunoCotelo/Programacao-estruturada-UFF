@@ -1,0 +1,21 @@
+Faça um programa que leia os nomes e as notas dos 60 alunos de uma turma e imprima, após a entrada de todos os dados, os nomes dos alunos aprovados. Considere que a média para aprovação é 6,0.
+
+#include stdio.h
+#define TAM 60
+#define TAMSTRING 100
+
+int main(void) {
+	float nota [TAM];
+	char nome [TAM][TAMSTRING];
+	for(int i = 0; i  TAM; i++){
+		printf(nDigite o nome do aluno );
+		scanf(n%[^n], nome[i]);
+		printf(Digite a nota );
+		scanf(%f, &nota[i]);
+	}
+	for(int j = 0; j  TAM; j++){
+		if(nota[j] = 6.0){
+			printf(nAluno %s esta aprovadon, nome[j]);
+		}
+	}
+}

@@ -1,0 +1,45 @@
+/*A prefeitura de uma cidade fez uma pesquisa com seus habitantes, coletando dados sobre salário, idade e número de filhos. Faça um programa que leia os dados de 20 pessoas, e que calcule e mostre:
+• a média de salário da população;
+• a média do número de filhos;
+• o maior salário.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#define N 20
+
+struct tipoHabitantes{
+	float salario;
+	int idade;
+	int numDeFilhos;
+};
+typedef struct tipoHabitantes Habitantes;
+
+void preencheHabitantes(Habitantes *habitantes ){
+	printf("Digite a idade: ");
+	scanf(" %d", &habitantes->idade);
+	printf("Digite o salario: ");
+	scanf("%f", &habitantes->salario);
+	printf("Digite o numero de filhos: ");
+	scanf("%d", &habitantes->numDeFilhos);
+}
+
+
+
+float media(int total){
+	return total/N;
+}
+
+int main(){
+	float somaSalarios = 0, mediaFilhos, mediaSalario, maiorSalario = 0;
+	int somaFilhos = 0;
+	Habitantes habitantes[N];
+	for(int i = 0; i < N; i++){
+		preencheHabitantes(&habitantes[i]);
+		somaSalarios += habitantes[i].salario;
+		somaFilhos += habitantes[i].numDeFilhos;
+		if(habitantes[i].salario > maiorSalario){
+			maiorSalario = habitantes[i].salario;
+		}
+	}
+	printf("A media de salario da população é R$%.2f, a media de filhos é %.2f e o maior salario é %.2f", 	mediaSalario = media(somaSalarios), mediaFilhos= media(somaFilhos), maiorSalario);
+}

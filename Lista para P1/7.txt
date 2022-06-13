@@ -1,0 +1,27 @@
+/*Faça um programa que leia dois números inteiros A e B e que calcule o quociente da divisão de A por B. O programa deve conter uma função recursiva que retorne este valor, entretanto para este cálculo não deve ser usada nenhuma operação de divisão. Lembre-se que a divisão é conjunto de subtrações sucessivas.*/
+
+#include <stdio.h>
+
+int sub(int A, int B){
+	if(B > A){
+		return 0;
+	}
+	else{
+		return (sub(A-B, B) + 1);	
+	}
+}
+
+
+int main(void) {
+	int A, B;
+	do {
+        printf("Dgite um valor para A >= 0: ");
+        scanf("%d", &A);
+    } while (A < 0);
+    do {
+        printf("Dgite um valor para B < A: ");
+        scanf("%d", &B);
+    } while (B >= A);
+    printf("\nO valor da divisao é: %d\n", sub(A,B));
+
+}	

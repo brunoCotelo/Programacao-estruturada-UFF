@@ -1,0 +1,16 @@
+/*Faça um programa que leia um valor inteiro e que informe se este valor é par ou impar.*/
+
+#include <stdio.h>
+
+int main(void) {
+int valor, parouimpar;
+scanf("%d", &valor);
+parouimpar = valor % 2;
+if(parouimpar == 0){
+printf("O valor é par");
+}
+else{
+printf("O valor é impar");
+}
+return 0;
+}

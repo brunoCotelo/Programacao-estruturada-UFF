@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+#define n 5
+
+struct candidato{
+int insc;
+float nota;
+int ano;
+char nome[40];
+};
+
+typedef struct candidato TIPOCAND;
+
+void ordenaEstrutura(TIPOCAND *vetor, int n) {
+int i, j; 
+typedef struct tcandidato aux;
+
+for (i = 1; i < n; i++) {
+printf("\n[%d] ", i);
+   for (j = 0; j < n - 1; j++) {
+      printf("%d, ", j);
+      if (vetor[j].nota > vetor[j + 1].nota) {
+          aux = vetor[j];
+          vetor[j] = vetor[j + 1];
+          vetor[j + 1] = aux;
+      }else if(vetor[j].nota==vetor[j + 1].nota){
+        if (vetor[j].ano < vetor[j + 1].nota){
+          aux = vetor[j];
+          vetor[j] = vetor[j + 1];
+          vetor[j + 1] = aux;
+        }else if(vetor[j].ano == vetor[j + 1].ano){
+          if(vetor[j].insc == vetor[j + 1].insc){
+            aux = vetor[j];
+          vetor[j] = vetor[j + 1];
+          vetor[j + 1] = aux;
+          }
+        }
+      }      
+    }
+  }
+}
+
+
+int main (void){;
+
+	TIPOCAND vetor[n];
+	int i;
+
+	for (i=0;i<n;i++) {
+		printf("\nDigite o nome do candidato: ");
+		scanf(" %s", vetor[i].nome);
+		printf("\nDigite a inscrição do candidato: ");
+		scanf("%d", &vetor[i].insc);
+		printf("\nDigite a nota do candidato: ");
+		scanf("%f", &vetor[i].nota);
+	}
+	ordenaEstrutura(vetor, n);
+	for(int i = 0; i < n; i++){
+		printf(" %d ", vetor[i]);
+	}
+	return 0;
+}

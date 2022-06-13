@@ -1,0 +1,21 @@
+
+#include <stdio.h>
+
+float dolareal(float dolar){
+float real;
+real = dolar * 5.43;
+return real;
+}
+
+int main(void) {
+int N, i;
+float dolar;
+printf("Digite quantas transformaçoes deseja fazer: ");
+scanf("%d", &N);
+for(i = 0; i < N; i++){
+printf("Digite o valor em dolar: ");
+scanf("%f", &dolar);
+printf("O valor em reais equivale a R$%.2f\n\n", dolareal(dolar));
+}
+return 0;
+}

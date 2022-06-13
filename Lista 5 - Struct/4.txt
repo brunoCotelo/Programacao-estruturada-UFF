@@ -1,0 +1,61 @@
+/*Faça um programa que leia as informações sobre as N ordens de serviço de um oficina mecânica. Os seguintes dados serão lidos: número da OS, valor, tipo de serviço e nome do cliente. O programa deve apresentar no final:
+• a média de preço dos serviços prestados,
+• os nomes dos clientes que pagaram por serviços acima da média calculada;
+• o nome do cliente que pagou pelo serviço mais caro.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct tipoOficina{
+	int numOrdServ;
+	float preco;
+	char tipoServico[100];
+	char nomeCliente[40];
+};
+typedef struct tipoOficina Oficina;
+
+void preencheOficina(Oficina *oficina){
+	printf("\nDigite o numero da ordem de serviço: ");
+	scanf("%d", &oficina->numOrdServ);
+	printf("Digite o tipo de serviço: ");
+	scanf(" %[^\n]", oficina->tipoServico);
+	printf("Digite o valor do serviço: ");
+	scanf("%f", &oficina->preco);
+	printf("Digite o nome do Cliente: ");
+	scanf(" %[^\n]", oficina->nomeCliente);
+}
+
+float calculaMedia(float precos, int n){
+	return precos/n;
+}
+
+void acimaDaMedia(Oficina *oficina, float media, int n){
+	for(int i = 0; i < n; i++){
+		if(oficina[i].preco > media){
+			printf("O cliente %s pagou acima da media!\n", oficina[i].nomeCliente);
+		}
+	}
+}
+
+int main(){
+	int n, indice;
+	float acumulaPreco = 0, media, maisCaro = 0;;
+	printf("Digite o numero de ordens de serviço a serem lidas: ");
+	scanf("%d", &n);
+	Oficina *oficina;
+	oficina = (Oficina*) malloc(n * sizeof(Oficina));
+	for(int i = 0; i < n; i++){
+		preencheOficina(&oficina[i]);
+		acumulaPreco += oficina[i].preco;
+		printf("%f", acumulaPreco);
+		if(oficina[i].preco > maisCaro){
+			maisCaro = oficina[i].preco;
+			indice = i;
+			printf("%d %f", indice, maisCaro);
+		}
+	}
+	media = calculaMedia(acumulaPreco, n);
+	printf("\nA média de preços foi de R$%.2f\n", media);
+	acimaDaMedia(oficina, media, n);
+	printf("O cliente que pagou o serviço mais caro foi %s", oficina[indice].nomeCliente);
+}
