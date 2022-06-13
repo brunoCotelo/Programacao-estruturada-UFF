@@ -1,1 +1,1 @@
-# prog-2-faculdade
+# Repositorio contendo os arquivos salvos feitos ao cursar a disciplina Programação Estruturada na UFF
